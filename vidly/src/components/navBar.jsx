@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
-import logo from '../utils/images/JS-wallpaper.jpg'
+import logo from '../utils/images/movie-logo2.png'
 
 const NavBar = ({ user }) => {
   return (

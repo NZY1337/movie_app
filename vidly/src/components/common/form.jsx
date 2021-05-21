@@ -36,6 +36,8 @@ class Form extends Component {
     //  this.doSubmitMovie()
 
     this.doSubmitCustomer()
+
+    // this.doSubmit()
   }
 
   handleChange = ({ currentTarget: input }) => {

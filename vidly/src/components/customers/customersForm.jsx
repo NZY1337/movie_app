@@ -10,9 +10,9 @@ class CustomersForm extends Form {
 
     this.state = {
       data: {
-        name: '',
+        name: 'asdasd',
         isGold: true,
-        phone: '',
+        phone: 'asdasd',
         imageBase64: null,
       },
       errors: {},
@@ -37,17 +37,26 @@ class CustomersForm extends Form {
   }
 
   doSubmitCustomer = async (e) => {
-    //  await saveCustomer(this.state.data)
-    const URL = `http://localhost:3900/api/customers/${this.props.match.params.id}`
+   
     const data = new FormData()
 
-    data.append('name', 'test')
+    data.append('name', this.state.data.name,)
     data.append('file', this.state.data.imageBase64)
+    data.append('isGold', this.state.data.isGold)
+    data.append('phone', this.state.data.phone)
+    
+     await saveCustomer(data)
+  }
 
-    axios
-      .put(URL, data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err))
+  mapCustomerToView = (customer) => {
+    return {
+        //   !delete the id when submitting this
+        _id: customer._id,
+        name: customer.name,
+        isGold: customer.isGold,
+        phone: customer.phone,
+        imageBase64: customer.imageBase64,
+    }
   }
 
   render() {
