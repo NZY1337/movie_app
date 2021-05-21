@@ -1,0 +1,175 @@
+body {
+  margin: 0;
+  padding: 0 0 0 0;
+  font-family: sans-serif;
+}
+
+.popcorn-btn {
+  border: 2px solid black !important;
+  transition: all 0.2s;
+  font-weight: bold !important;
+}
+
+.popcorn-btn:focus {
+  transform: translateY(10%);
+}
+
+.navbar {
+  margin-bottom: 30px;
+}
+
+.navbar a,
+#dropdown-basic {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.bg-image {
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+
+  width: 100%;
+  height: 70vh;
+  /* filter: drop-shadow(4px 4px 10px gray); */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-image:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.bg-image::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  animation-name: bgAimation;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+@keyframes bgAimation {
+  0%,
+  100% {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+}
+
+.bg-image h1 {
+  color: white;
+  text-transform: uppercase;
+  font-size: 3rem;
+  z-index: 1;
+}
+
+.bg-image p {
+  color: white;
+  z-index: 1;
+}
+
+.edit-form-movie input[type='checkbox'] {
+  width: auto;
+  margin-left: 0.5rem;
+}
+
+/* .edit-form-movie .form-group:last-of-type {
+  display: flex !important;
+  align-items: center;
+} */
+
+.navbar-expand-lg .navbar-nav {
+  align-items: center;
+}
+
+/*Favorite movie component */
+.favorite-movie {
+  height: 200px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.favorite-movie::after {
+  position: absolute;
+  width: calc(100% - 30px);
+  z-index: 0;
+  margin: 0 auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  content: '';
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.favorite-movie .favorite-movie-title {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+.favorite-movie img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.nav-link.active {
+  color: #fc466b !important;
+}
+.list-group li.active {
+  background: #fc466b;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-danger {
+  background-color: #fc466b !important;
+  font-weight: 600 !important;
+}
+
+ul.list-group,
+.btn,
+input {
+  border-radius: 0 !important;
+}
+
+.table thead th {
+  border: none !important;
+}
+
+.table a {
+  color: #000;
+}
+
+/* pagination */
+
+.page-item.active .page-link {
+  background: #000 !important;
+  border: none;
+  cursor: pointer !important;
+}
+
+.page-item:not(.active) .page-link {
+  cursor: pointer !important;
+  color: #000 !important;
+}
