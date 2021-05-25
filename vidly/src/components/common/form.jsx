@@ -4,6 +4,8 @@ import Input from './input'
 import Select from './select'
 
 class Form extends Component {
+     
+
   state = {
     data: {},
     errors: {},
@@ -16,6 +18,7 @@ class Form extends Component {
 
     const errors = {}
     for (let item of error.details) errors[item.path[0]] = item.message
+    
     return errors
   }
 
@@ -58,6 +61,8 @@ class Form extends Component {
     //? for input type file = CustomerForm
     if (input.type === 'file') {
       data[input.name] = input.files[0]
+      
+    //   console.log(input.files[0].name)
     }
 
     this.setState({ data, errors })
@@ -85,9 +90,9 @@ class Form extends Component {
       />
     )
   }
-
+  
   //! input[type="file" should not have a value] - THINK ABOUT IT AGAIN or refactor the code
-  renderInput(name, label, type = 'text', checked, accept = '.jpg') {
+  renderInput(name, label, type = 'text', checked, accept = '.jpg', ref) {
     const { data, errors } = this.state
 
     return (
@@ -97,11 +102,14 @@ class Form extends Component {
         defaultValue={
           type === 'file' && data[name] !== null ? data[name].name : data[name]
         }
+        // value={data[name]}
+        
         label={label}
         onChange={this.handleChange}
         error={errors[name]}
         checked={checked}
         accept={accept}
+        innerRef={ref}
       />
     )
   }

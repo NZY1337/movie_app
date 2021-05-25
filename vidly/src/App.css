@@ -173,3 +173,10 @@ input {
   cursor: pointer !important;
   color: #000 !important;
 }
+
+
+/* Customers */
+
+.renderCustomers {
+    margin-top:4rem
+}

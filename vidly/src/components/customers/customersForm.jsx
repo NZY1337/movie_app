@@ -1,18 +1,19 @@
 import React from 'react'
 import Joi from 'joi-browser'
 import Form from '../common/form'
-import { saveCustomer } from '../../services/customerService'
+import { saveCustomer, getCustomer } from '../../services/customerService'
 import axios from 'axios'
 
 class CustomersForm extends Form {
   constructor(props) {
     super(props)
+    this.inputRef = React.createRef()
 
     this.state = {
       data: {
-        name: 'asdasd',
-        isGold: true,
-        phone: 'asdasd',
+        name: '',
+        isGold: null,
+        phone: '',
         imageBase64: null,
       },
       errors: {},
@@ -30,23 +31,54 @@ class CustomersForm extends Form {
   }
 
   schema = {
+    _id: Joi.string(),
     name: Joi.string().min(5).max(50).required(),
     phone: Joi.string().min(5).max(50).required(),
     isGold: Joi.boolean(),
     imageBase64: Joi.any(),
   }
 
-  doSubmitCustomer = async (e) => {
-   
-    const data = new FormData()
+  async populateCustomer() {
+    try { 
+      // detect if we edit a new movie or not
+      const customerId = this.props.match.params.id
+      if (customerId === 'new') return
 
-    data.append('name', this.state.data.name,)
-    data.append('file', this.state.data.imageBase64)
-    data.append('isGold', this.state.data.isGold)
-    data.append('phone', this.state.data.phone)
-    
-     await saveCustomer(data)
+      const { data: customer } = await getCustomer(customerId)
+      
+      this.setState({ data: this.mapCustomerToView(customer) })
+    } catch (ex) {
+      if (ex.response && ex.response.status === 404) {
+        this.props.history.replace('/not-found')
+      }
+    }
   }
+ 
+  async componentDidMount() {
+    await this.populateCustomer()
+   
+  }
+
+  doSubmitCustomer = async (e) => {
+    const data = new FormData()
+    
+
+    // data.append('name', this.state.data.name) 
+    // if (this.inputRef.current.value !== '') {
+    //     data.append('file', this.state.data.imageBase64)
+    // }       
+    // data.append('isGold', this.state.data.isGold)
+    // data.append('phone', this.state.data.phone)
+    
+
+    // const findCustomerId = this.props.match.params.id !== 'new' ? this.props.match.params.id : null
+    // await saveCustomer(data, findCustomerId)
+    
+    // this.props.history.push('/customers')
+
+    console.log(this.inputRef.current.value)
+  }
+  
 
   mapCustomerToView = (customer) => {
     return {
@@ -58,6 +90,7 @@ class CustomersForm extends Form {
         imageBase64: customer.imageBase64,
     }
   }
+
 
   render() {
     return (
@@ -73,7 +106,7 @@ class CustomersForm extends Form {
               {this.renderInput('name', 'Name')}
               {this.renderInput('phone', 'Phone')}
               {this.renderSelect('isGold', 'Gold Customer', this.state.isGold)}
-              {this.renderInput('imageBase64', 'User Image', 'file')}
+              {this.renderInput('imageBase64', 'User Image', 'file', false, '*jpg', this.inputRef)}
               {this.renderButton('Save')}
             </form>
           </div>
