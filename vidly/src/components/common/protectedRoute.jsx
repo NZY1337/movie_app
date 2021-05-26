@@ -1,6 +1,6 @@
-import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
-import auth from '../../services/authService'
+import React from "react";
+import { Redirect, Route } from "react-router-dom";
+import auth from "../../services/authService";
 
 /*
     the logic:
@@ -13,14 +13,14 @@ const ProtectedRoute = ({ component: Component, render, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (!auth.getUser()) return <Redirect to="/login" />
-        return Component ? <Component {...props} /> : render(props)
+        if (!auth.getUser()) return <Redirect to="/login" />;
+        return Component ? <Component {...props} /> : render(props);
       }}
     />
-  )
-}
+  );
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;
 
 /* 
     <Route

@@ -4,7 +4,10 @@ import Input from './input'
 import Select from './select'
 
 class Form extends Component {
-     
+    constructor(props) {
+        super(props)
+        this.inputRef = React.createRef()
+    }   
 
   state = {
     data: {},
