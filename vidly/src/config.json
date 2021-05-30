@@ -3,5 +3,6 @@
   "GENRES_API": "http://localhost:3900/api/genres",
   "USERS_API": "http://localhost:3900/api/users",
   "AUTH_API": "http://localhost:3900/api/auth",
-  "CUSTOMERS_API": "http://localhost:3900/api/customers"
+  "CUSTOMERS_API": "http://localhost:3900/api/customers",
+  "RENTALS_API": "http://localhost:3900/api/rentals"
 }

@@ -50,7 +50,7 @@ body {
 
 .bg-image::after {
   position: absolute;
-  content: '';
+  content: "";
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7) !important;
@@ -82,7 +82,7 @@ body {
   z-index: 1;
 }
 
-.edit-form-movie input[type='checkbox'] {
+.edit-form-movie input[type="checkbox"] {
   width: auto;
   margin-left: 0.5rem;
 }
@@ -113,7 +113,7 @@ body {
   bottom: 0;
   right: 0;
   height: 100%;
-  content: '';
+  content: "";
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -174,9 +174,9 @@ input {
   color: #000 !important;
 }
 
-
 /* Customers */
 
-.renderCustomers {
-    margin-top:4rem
+.renderCustomers,
+.renderRentals {
+  margin-top: 4rem;
 }

@@ -1,65 +1,57 @@
-import React from 'react'
-import Joi from 'joi-browser'
-import Form from './common/form'
-import { getMovie, saveMovie } from '../services/movieService'
-import { getGenresApi } from '../services/genreService'
+import React from "react";
+import Joi from "joi-browser";
+import Form from "./common/form";
+import { getMovie, saveMovie } from "../services/movieService";
+import { getGenresApi } from "../services/genreService";
 
 class MovieForm extends Form {
   state = {
     data: {
-      title: '',
-      genreId: '',
-      numberInStock: '',
-      dailyRentalRate: '',
-      movieCover: '',
+      title: "",
+      genreId: "",
+      numberInStock: "",
+      dailyRentalRate: "",
+      movieCover: "",
       liked: false,
     },
     genres: [],
     errors: {},
-  }
+  };
 
   schema = {
     _id: Joi.string(),
-    title: Joi.string().required().label('Title'),
-    genreId: Joi.string().required().label('Genre'),
-    numberInStock: Joi.number()
-      .required()
-      .min(0)
-      .max(100)
-      .label('Number in Stock'),
-    dailyRentalRate: Joi.number()
-      .required()
-      .min(0)
-      .max(10)
-      .label('Daily Rental Rate'),
-    movieCover: Joi.string().required().label('Movie Cover'),
-    liked: Joi.boolean().label('Add To Favorite'),
-  }
+    title: Joi.string().required().label("Title"),
+    genreId: Joi.string().required().label("Genre"),
+    numberInStock: Joi.number().required().min(0).max(100).label("Number in Stock"),
+    dailyRentalRate: Joi.number().required().min(0).max(255).label("Daily Rental Rate"),
+    movieCover: Joi.string().required().label("Movie Cover"),
+    liked: Joi.boolean().label("Add To Favorite"),
+  };
 
   async populateGenres() {
-    const { data: genres } = await getGenresApi()
-    this.setState({ genres })
+    const { data: genres } = await getGenresApi();
+    this.setState({ genres });
   }
 
   async populateMovie() {
     try {
       // detect if we edit a new movie or not
-      const movieId = this.props.match.params.id
-      if (movieId === 'new') return
+      const movieId = this.props.match.params.id;
+      if (movieId === "new") return;
 
-      const { data: movie } = await getMovie(movieId)
+      const { data: movie } = await getMovie(movieId);
 
-      this.setState({ data: this.mapToViewModel(movie) })
+      this.setState({ data: this.mapToViewModel(movie) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404) {
-        this.props.history.replace('/not-found')
+        this.props.history.replace("/not-found");
       }
     }
   }
 
   async componentDidMount() {
-    await this.populateGenres()
-    await this.populateMovie()
+    await this.populateGenres();
+    await this.populateMovie();
   }
 
   mapToViewModel(movie) {
@@ -72,17 +64,17 @@ class MovieForm extends Form {
       dailyRentalRate: movie.dailyRentalRate,
       movieCover: movie.movieCover,
       liked: movie.liked,
-    }
+    };
   }
 
   doSubmitMovie = async () => {
-    await saveMovie(this.state.data)
+    await saveMovie(this.state.data);
 
-    this.props.history.push('/movies')
-  }
+    this.props.history.push("/movies");
+  };
 
   render() {
-    const { liked } = this.state.data
+    const { liked } = this.state.data;
 
     return (
       <div className="container">
@@ -90,19 +82,19 @@ class MovieForm extends Form {
           <div className="col-lg-8">
             <h1>Edit Movie</h1>
             <form onSubmit={this.handleSubmit} className="edit-form-movie">
-              {this.renderInput('title', 'Title')}
-              {this.renderSelect('genreId', 'Genre', this.state.genres)}
-              {this.renderInput('numberInStock', 'Number in Stock', 'number')}
-              {this.renderInput('dailyRentalRate', 'Rate')}
-              {this.renderInput('movieCover', 'Movie Cover', 'url')}
-              {this.renderInput('liked', 'Add To Favorite', 'checkbox', liked)}
-              {this.renderButton('Save')}
+              {this.renderInput("title", "Title")}
+              {this.renderSelect("genreId", "Genre", this.state.genres)}
+              {this.renderInput("numberInStock", "Number in Stock", "number")}
+              {this.renderInput("dailyRentalRate", "Daily Rental Rate")}
+              {this.renderInput("movieCover", "Movie Cover", "url")}
+              {this.renderInput("liked", "Add To Favorite", "checkbox", liked)}
+              {this.renderButton("Save")}
             </form>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default MovieForm
+export default MovieForm;

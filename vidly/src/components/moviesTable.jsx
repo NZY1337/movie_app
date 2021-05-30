@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import Table from './common/table'
-import Like from './common/like'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import Table from "./common/table";
+import Like from "./common/like";
 
 class MoviesTable extends Component {
   columns = [
     {
-      path: 'title',
-      label: 'Title',
+      path: "title",
+      label: "Title",
       content: (movie) => (
         <Link
           onMouseEnter={() => this.props.onHandleDisplayMovieCover(movie._id)}
@@ -18,53 +18,41 @@ class MoviesTable extends Component {
         </Link>
       ),
     },
-    { path: 'genre.name', label: 'Genre' },
-    { path: 'numberInStock', label: 'Stock' },
-    { path: 'dailyRentalRate', label: 'Rate' },
+    { path: "genre.name", label: "Genre" },
+    { path: "numberInStock", label: "Stock" },
+    { path: "dailyRentalRate", label: "Daily Rental Price" },
     {
-      key: 'like',
-      content: (movie) => (
-        <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />
-      ),
+      key: "like",
+      content: (movie) => <Like liked={movie.liked} onClick={() => this.props.onLike(movie)} />,
     },
-  ]
+  ];
 
   deleteColumn = {
-    key: 'delete',
+    key: "delete",
     content: (movie) => {
       if (this.props.user !== null) {
         return (
-          <button
-            onClick={() => this.props.onDelete(movie)}
-            className="btn btn-danger btn-sm"
-          >
+          <button onClick={() => this.props.onDelete(movie)} className="btn btn-danger btn-sm">
             Delete
           </button>
-        )
+        );
       }
     },
-  }
+  };
 
   constructor(props) {
-    super(props)
+    super(props);
     //! is admin is added manually into MongoDB
     if (this.props.user !== null && this.props.user.isAdmin) {
-      this.columns.push(this.deleteColumn)
+      this.columns.push(this.deleteColumn);
     }
   }
 
   render() {
-    const { movies, onSort, sortColumn } = this.props
+    const { movies, onSort, sortColumn } = this.props;
 
-    return (
-      <Table
-        columns={this.columns}
-        data={movies}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
-    )
+    return <Table columns={this.columns} data={movies} sortColumn={sortColumn} onSort={onSort} />;
   }
 }
 
-export default MoviesTable
+export default MoviesTable;

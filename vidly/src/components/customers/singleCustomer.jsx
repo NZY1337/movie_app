@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import defaultProfile from "../../utils/images/person_placeholder.jpg";
+import SingleDefaultLayout from "../common/singleDefaultLayout";
 
 const img = {
   width: "100px",
@@ -20,8 +21,8 @@ const Customer = ({ deleteCustomer, imageBase64, name, phone, isGold, _id }) => 
   };
 
   return (
-    <div style={{ display: "flex", marginBottom: "2rem", borderBottom: "1px solid black" }}>
-      {renderUserImage(imageBase64)}
+    <SingleDefaultLayout>
+      <div>{renderUserImage(imageBase64)}</div>
 
       <div>
         <Link to={`/customers/${_id}`}>{name}</Link>
@@ -37,7 +38,7 @@ const Customer = ({ deleteCustomer, imageBase64, name, phone, isGold, _id }) => 
           Delete Customer
         </button>
       </div>
-    </div>
+    </SingleDefaultLayout>
   );
 };
 

@@ -1,14 +1,14 @@
-import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
-import logo from '../utils/images/movie-logo2.png'
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
+import logo from "../utils/images/movie-logo2.png";
 
 const NavBar = ({ user }) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
-          <img style={{ width: '100px' }} src={logo} alt="" />
+          <img style={{ width: "100px" }} src={logo} alt="" />
         </Link>
 
         <button
@@ -23,10 +23,7 @@ const NavBar = ({ user }) => {
           <span className="navbar-toggler-icon" />
         </button>
 
-        <div
-          className="collapse navbar-collapse justify-content-end"
-          id="navbarNavAltMarkup"
-        >
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
           <div className="navbar-nav">
             {/* <NavLink className="nav-item nav-link" to="/movies">
               Movies
@@ -38,9 +35,7 @@ const NavBar = ({ user }) => {
 
               <Dropdown.Menu>
                 <Dropdown.Item href="/movies">All Movies</Dropdown.Item>
-                <Dropdown.Item href="/fav-movies">
-                  Favorite Movies
-                </Dropdown.Item>
+                <Dropdown.Item href="/fav-movies">Favorite Movies</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <NavLink className="nav-item nav-link" to="/customers">
@@ -80,7 +75,7 @@ const NavBar = ({ user }) => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

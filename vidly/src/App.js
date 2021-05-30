@@ -1,37 +1,43 @@
-import React, { Component } from 'react'
-import { Route, Redirect, Switch } from 'react-router-dom'
-import Movies from './components/movies'
-import MovieForm from './components/movieForm'
+import React, { Component } from "react";
+import { Route, Redirect, Switch } from "react-router-dom";
 
-import Rentals from './components/rentals'
-import NotFound from './components/notFound'
-import NavBar from './components/navBar'
-import LoginForm from './components/loginForm'
-import RegisterForm from './components/registerForm'
-import FavoriteMovie from './components/favoriteMovie'
-import MovieComponent from './components/movieComponent'
-import Logout from './components/logout'
-import auth from './services/authService'
+import NotFound from "./components/notFound";
+import NavBar from "./components/navBar";
+import LoginForm from "./components/loginForm";
+import RegisterForm from "./components/registerForm";
+
+import Logout from "./components/logout";
+import auth from "./services/authService";
+
+// rentals
+import Rentals from "./components/rentals/rentals";
+import RentalsForm from "./components/rentals/rentalsForm";
+
+// movies
+import FavoriteMovie from "./components/favoriteMovie";
+import MovieComponent from "./components/movieComponent";
+import Movies from "./components/movies";
+import MovieForm from "./components/movieForm";
 
 // customers
-import Customers from './components/customers/customers'
-import CustomersForm from './components/customers/customersForm'
+import Customers from "./components/customers/customers";
+import CustomersForm from "./components/customers/customersForm";
 
-import ProtectedRoute from './components/common/protectedRoute'
-import './App.css'
+import ProtectedRoute from "./components/common/protectedRoute";
+import "./App.css";
 class App extends Component {
-  state = {}
+  state = {};
 
   componentDidMount = () => {
-    const user = auth.getUser()
+    const user = auth.getUser();
 
     this.setState({
       user,
-    })
-  }
+    });
+  };
 
   render() {
-    const { user } = this.state
+    const { user } = this.state;
     return (
       <>
         <NavBar user={user} />
@@ -40,25 +46,27 @@ class App extends Component {
           //customers
           <Route path="/customers/:id" component={CustomersForm} />
           <Route path="/customers" exact component={Customers} />
-          //other
-          <Route path="/register" component={RegisterForm} />
-          <Route path="/login" component={LoginForm} />
-          <Route path="/logout" component={Logout} />
+          //movies
           <Route path="/fav-movies" exact component={FavoriteMovie} />
           <ProtectedRoute path="/movies/:id" component={MovieForm} />
           <Route path="/fav-movies/:id" component={MovieComponent} />
+          //rentals
+          <Route path="/rentals" exact component={Rentals} />
+          <Route path="/rentals/:id" component={RentalsForm} />
+          <Route path="/register" component={RegisterForm} />
+          <Route path="/login" component={LoginForm} />
+          <Route path="/logout" component={Logout} />
           <Route //! pass the props object in the route because it gives us the acces to the history, match, etc...
             path="/movies"
             render={(props) => <Movies {...props} user={this.state.user} />}
           />
-          <Route path="/rentals" component={Rentals} />
           <Route path="/not-found" component={NotFound} />
           <Redirect from="/" exact to="/movies" />
           <Redirect to="/not-found" />
         </Switch>
       </>
-    )
+    );
   }
 }
 
-export default App
+export default App;
