@@ -14,3 +14,7 @@ export async function getRentals() {
 export async function getRental(id) {
   return axios.get(api.RENTALS_API + "/" + id);
 }
+
+export async function deleteRental(id) {
+  return axios.delete(api.RENTALS_API + "/" + id);
+}

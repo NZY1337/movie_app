@@ -34,19 +34,27 @@ class Form extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
+    let formId = e.currentTarget.id;
     const errors = this.validate();
     this.setState({ errors: errors || {} });
     if (errors) return;
 
-    //  this.doSubmitMovie()
-
-    // this.doSubmitCustomer();
-
-    this.doSubmitRental();
-
-    // this.doSubmit()
+    this.submitSpecificOperation(formId);
   };
+
+  submitSpecificOperation(formId) {
+    if (formId === "rental-form") {
+      this.doSubmitRental();
+    } else if (formId === "movie-form") {
+      this.doSubmitMovie();
+    } else if (formId === "customer-form") {
+      this.doSubmitCustomer();
+    } else if (formId === "return-form") {
+      this.doSubmitReturn();
+    } else {
+      this.doSubmit();
+    }
+  }
 
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };

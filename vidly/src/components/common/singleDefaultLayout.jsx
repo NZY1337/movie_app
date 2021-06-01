@@ -1,5 +1,9 @@
 const SingleDefaultLayout = ({ children }) => {
-  return <div style={{ display: "flex", marginBottom: "2rem", borderBottom: "1px solid black" }}>{children}</div>;
+  return (
+    <div className="col-lg-3" style={{ marginBottom: "30px" }}>
+      <div className="default-card">{children}</div>
+    </div>
+  );
 };
 
 export default SingleDefaultLayout;

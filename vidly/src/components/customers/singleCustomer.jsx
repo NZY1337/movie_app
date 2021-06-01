@@ -2,35 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 import defaultProfile from "../../utils/images/person_placeholder.jpg";
 import SingleDefaultLayout from "../common/singleDefaultLayout";
-
-const img = {
-  width: "100px",
-  height: "100px",
-  borderRadius: "50%",
-  objectFit: "cover",
-  marginRight: "1.5rem",
-};
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 const Customer = ({ deleteCustomer, imageBase64, name, phone, isGold, _id }) => {
   const renderUserImage = (image) => {
     if (image === null) {
-      return <img style={img} className="img-fluid" src={defaultProfile} />;
+      return <img className="img-fluid" src={defaultProfile} />;
     } else {
-      return <img style={img} className="img-fluid" src={process.env.PUBLIC_URL + `/images/${imageBase64}`} />;
+      return <img className="img-fluid" src={process.env.PUBLIC_URL + `/images/${imageBase64}`} />;
     }
   };
 
   return (
     <SingleDefaultLayout>
-      <div>{renderUserImage(imageBase64)}</div>
+      <div className="top-card">
+        {renderUserImage(imageBase64)}
+        <div className="edit-client-wrapper">
+          <Link to={`/customers/${_id}`}>
+            <FontAwesomeIcon icon={faEdit} />
+          </Link>
+        </div>
+      </div>
 
-      <div>
-        <Link to={`/customers/${_id}`}>{name}</Link>
-        <p>{phone}</p>
-        <p>Is Gold: {isGold ? "yes" : "no"}</p>
+      <div className="bottom-card">
+        <h5>{name}</h5>
+
+        <p>
+          Phone: <b>{phone}</b>
+        </p>
+        <p>
+          Gold Client: <b>{isGold ? "yes" : "no"}</b>
+        </p>
 
         <button
-          className="btn btn-danger"
+          className="btn btn-danger btn-delete-customer"
           onClick={() => {
             deleteCustomer(_id);
           }}

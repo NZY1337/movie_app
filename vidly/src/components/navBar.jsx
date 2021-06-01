@@ -44,6 +44,9 @@ const NavBar = ({ user }) => {
             <NavLink className="nav-item nav-link" to="/rentals">
               Rentals
             </NavLink>
+            <NavLink className="nav-item nav-link" to="/returns">
+              Returns
+            </NavLink>
 
             {/* if we do not have a user */}
             {!user && (

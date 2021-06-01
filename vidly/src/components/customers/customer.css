@@ -1,0 +1,86 @@
+.default-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.default-card {
+  text-align: center;
+  border-radius: 10px;
+  overflow: hidden;
+  color: #000;
+  background-color: aliceblue;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: transform 0.2s;
+}
+
+.default-card:hover {
+  transform: translateY(-3px);
+}
+
+.default-card p {
+  margin-bottom: 0.5rem;
+}
+
+.default-card .bottom-card {
+  padding: 1.5rem 0 2rem 0;
+  border-top: 4px solid tomato;
+}
+
+.default-card .bottom-card h5 {
+  color: #000;
+}
+
+.default-card .bottom-card h5:hover {
+  outline: none;
+}
+
+.default-card .btn-delete-customer {
+  margin-top: 1rem;
+  font-weight: 600;
+  background: none;
+  border: 2px solid tomato;
+  color: tomato;
+  padding: 13px;
+  border-radius: 5px !important;
+  font-size: 13px;
+}
+
+.default-card .btn-delete-customer:hover {
+  border: 2px solid tomato;
+  background-color: tomato;
+  color: #fff;
+}
+
+.default-card .top-card {
+  position: relative;
+}
+
+.default-card .top-card .edit-client-wrapper {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: tomato;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.default-card .top-card .edit-client-wrapper a {
+  color: tomato;
+}
+
+.default-card .top-card .edit-client-wrapper:hover a {
+  color: #fff;
+}
+
+.default-card .top-card .edit-client-wrapper:hover {
+  background: tomato;
+  color: white;
+}

@@ -25,6 +25,7 @@ import CustomersForm from "./components/customers/customersForm";
 
 import ProtectedRoute from "./components/common/protectedRoute";
 import "./App.css";
+import ReturnsForm from "./components/returns/returnsForm";
 class App extends Component {
   state = {};
 
@@ -53,6 +54,8 @@ class App extends Component {
           //rentals
           <Route path="/rentals" exact component={Rentals} />
           <Route path="/rentals/:id" component={RentalsForm} />
+          //returns
+          <Route path="/returns" component={ReturnsForm} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/login" component={LoginForm} />
           <Route path="/logout" component={Logout} />

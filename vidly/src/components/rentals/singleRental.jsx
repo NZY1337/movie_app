@@ -2,7 +2,7 @@ import React from "react";
 
 import SingleDefaultLayout from "../common/singleDefaultLayout";
 
-const SingleRental = ({ deleteRental, customer, movie }) => {
+const SingleRental = ({ customer, movie }) => {
   return (
     <SingleDefaultLayout>
       <div>

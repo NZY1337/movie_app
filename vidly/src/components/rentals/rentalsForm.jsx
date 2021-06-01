@@ -41,41 +41,19 @@ class RentalsForm extends Form {
     });
   }
 
-  //   async populateRentals() {
-  //     try {
-  //       const { id } = this.props.match.params;
-  //       if (id === "new") return;
-
-  //       const { data: rental } = await getRental(id);
-
-  //       this.setState({
-  //         data: this.mapRentalToView(rental),
-  //       });
-  //     } catch (ex) {
-  //       if (ex.response && ex.response.status === 404) {
-  //         this.props.history.replace("/not-found");
-  //       }
-  //     }
-  //   }
-
-  //   mapRentalToView(rental) {
-  //     return {
-  //       movieId: rental.movie._id,
-  //       customerId: rental.customer._id,
-  //     };
-  //   }
-
-  doSubmitRental = async () => {
-    const { id } = this.props.match.params;
-    await saveRental(this.state.data, id);
-
-    this.props.history.push("/rentals");
+  doSubmitRental = async (e) => {
+    try {
+      const { id } = this.props.match.params;
+      await saveRental(this.state.data, id);
+      this.props.history.push("/rentals");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   componentDidMount() {
     this.populateCustomers();
     this.populateMovies();
-    // this.populateRentals();
   }
 
   render() {
@@ -85,7 +63,7 @@ class RentalsForm extends Form {
           <div className="col-lg-8">
             <h1>Add New Rental</h1>
 
-            <form action="" onSubmit={this.handleSubmit}>
+            <form id="rental-form" onSubmit={this.handleSubmit}>
               {this.renderSelect("customerId", "Customers", this.state.customers)}
               {this.renderSelect("movieId", "Movies", this.state.movies)}
               {this.renderButton("Save")}

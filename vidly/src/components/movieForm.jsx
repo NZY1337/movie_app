@@ -81,7 +81,7 @@ class MovieForm extends Form {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <h1>Edit Movie</h1>
-            <form onSubmit={this.handleSubmit} className="edit-form-movie">
+            <form onSubmit={this.handleSubmit} id="movie-form" className="edit-form-movie">
               {this.renderInput("title", "Title")}
               {this.renderSelect("genreId", "Genre", this.state.genres)}
               {this.renderInput("numberInStock", "Number in Stock", "number")}

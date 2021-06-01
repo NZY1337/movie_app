@@ -1,18 +1,21 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import MoviesTable from './moviesTable'
-import ListGroup from './common/listGroup'
-import Pagination from './common/pagination'
-import { getMoviesApi, deleteMovieApi } from '../services/movieService'
-import { getGenresApi } from '../services/genreService'
-import { paginate } from '../utils/paginate'
-import _ from 'lodash'
-import SearchBox from './searchBox'
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import MoviesTable from "./moviesTable";
+import ListGroup from "./common/listGroup";
+import Pagination from "./common/pagination";
+import { getMoviesApi, deleteMovieApi } from "../services/movieService";
+import { getGenresApi } from "../services/genreService";
+import { paginate } from "../utils/paginate";
+import _ from "lodash";
+import SearchBox from "./searchBox";
 
-import AnimateMovieCover from './animatedMovieCover'
-import Hero from './common/hero'
+import AnimateMovieCover from "./animatedMovieCover";
+import Hero from "./common/hero";
 
-import witcher from '../utils/images/the-witcher.jpg'
+import witcher from "../utils/images/the-witcher.jpg";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faVideo } from "@fortawesome/free-solid-svg-icons";
 
 // TODO:: changed the movieCover functionality -> onMouseHover remove the component
 class Movies extends Component {
@@ -22,82 +25,76 @@ class Movies extends Component {
     genres: [],
     currentPage: 1,
     pageSize: 4,
-    searchQuery: '',
+    searchQuery: "",
     selectedGenre: null,
-    sortColumn: { path: 'title', order: 'asc' },
+    sortColumn: { path: "title", order: "asc" },
     currentMovieCover: null,
     fullImgVisible: false,
     genreActiveClassIndex: 0,
-  }
+  };
 
   async componentDidMount() {
-    const { data: movies } = await getMoviesApi()
-    const { data: genresApi } = await getGenresApi()
+    const { data: movies } = await getMoviesApi();
+    const { data: genresApi } = await getGenresApi();
 
-    const genres = [{ _id: '', name: 'All Genres' }, ...genresApi]
+    const genres = [{ _id: "", name: "All Genres" }, ...genresApi];
     this.setState({
       movies,
       genres,
-    })
+    });
   }
 
   //!:: optimistic delete
   handleDelete = async (movie) => {
-    const originalMovies = this.state.movies
+    const originalMovies = this.state.movies;
 
-    const movies = originalMovies.filter((m) => m._id !== movie._id)
-    this.setState({ movies })
+    const movies = originalMovies.filter((m) => m._id !== movie._id);
+    this.setState({ movies });
 
     try {
-      await deleteMovieApi(movie._id)
+      await deleteMovieApi(movie._id);
     } catch (err) {
       if (err.response && err.response.status === 404) {
-        console.log(`Error: ${err}`)
+        console.log(`Error: ${err}`);
 
         this.setState({
           movies: originalMovies,
-        })
+        });
       }
     }
-  }
+  };
 
   handleLike = async (movie) => {
-    const movies = [...this.state.movies]
-    const index = movies.indexOf(movie)
+    const movies = [...this.state.movies];
+    const index = movies.indexOf(movie);
 
-    movies[index] = { ...movies[index] }
-    movies[index].liked = !movies[index].liked
-
-    // await editMovie(movies[index]._id, movies[index])
-
-    // this.setState({ movies })
-  }
+    movies[index] = { ...movies[index] };
+    movies[index].liked = !movies[index].liked;
+  };
 
   handlePageChange = (page) => {
-    this.setState({ currentPage: page })
-  }
+    this.setState({ currentPage: page });
+  };
 
   handleGenreSelect = (genre, index) => {
     this.setState({
       genreActiveClassIndex: index,
       selectedGenre: genre,
-      searchQuery: '',
+      searchQuery: "",
       currentPage: 1,
-    })
-  }
+    });
+  };
 
   handleSearch = (query) => {
-    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 })
-  }
+    this.setState({ searchQuery: query, selectedGenre: null, currentPage: 1 });
+  };
 
   handleSort = (sortColumn) => {
-    this.setState({ sortColumn })
-  }
+    this.setState({ sortColumn });
+  };
 
   handleDisplayCover = (id) => {
-    const currentMovieCover = this.state.movies.find(
-      (movie) => movie._id === id,
-    )
+    const currentMovieCover = this.state.movies.find((movie) => movie._id === id);
 
     this.setState(
       {
@@ -106,75 +103,53 @@ class Movies extends Component {
       },
       () => {
         // console.log(this.state.fullImgVisible)
-      },
-    )
+      }
+    );
 
     //! --> this will not show the updated state (true) because state is asyncronyous. Either call fullImgVisible in render or
     //! --> call the callback for the setState and console.log(fullImgVisible)
     // console.log(this.state.fullImgVisible)
-  }
+  };
 
   handleHideCover = () => {
     this.setState({
       fullImgVisible: false,
-    })
-  }
+    });
+  };
 
   getPagedData = () => {
-    const {
-      pageSize,
-      currentPage,
-      sortColumn,
-      selectedGenre,
-      searchQuery,
-      movies: allMovies,
-    } = this.state
+    const { pageSize, currentPage, sortColumn, selectedGenre, searchQuery, movies: allMovies } = this.state;
 
-    let filtered = allMovies
+    let filtered = allMovies;
 
-    if (searchQuery)
-      filtered = allMovies.filter((m) =>
-        m.title.toLowerCase().startsWith(searchQuery.toLowerCase()),
-      )
-    else if (selectedGenre && selectedGenre._id)
-      filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id)
+    if (searchQuery) filtered = allMovies.filter((m) => m.title.toLowerCase().startsWith(searchQuery.toLowerCase()));
+    else if (selectedGenre && selectedGenre._id) filtered = allMovies.filter((m) => m.genre._id === selectedGenre._id);
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-    const movies = paginate(sorted, currentPage, pageSize)
+    const movies = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: filtered.length, data: movies }
-  }
+    return { totalCount: filtered.length, data: movies };
+  };
 
   render() {
-    const { length: count } = this.state.movies
-    const { user } = this.props
-    const {
-      pageSize,
-      currentPage,
-      sortColumn,
-      searchQuery,
-      currentMovieCover,
-      genreActiveClassIndex,
-    } = this.state
+    const { length: count } = this.state.movies;
+    const { user } = this.props;
+    const { pageSize, currentPage, sortColumn, searchQuery, currentMovieCover, genreActiveClassIndex } = this.state;
 
     if (count === 0)
       return (
         <p>
           There are no movies in the <b>database</b>.
         </p>
-      )
+      );
 
-    const { totalCount, data: movies } = this.getPagedData()
+    const { totalCount, data: movies } = this.getPagedData();
 
     return (
       <>
         <div className="container-fluid">
-          <Hero
-            bgImg={this.state.cover}
-            description="Your Daily Does of Movies"
-            title="PopCorn App"
-          />
+          <Hero bgImg={this.state.cover} description="Your Daily Dose of Movies" title="PopCorn App" />
         </div>
 
         <div className="container mb-5">
@@ -188,21 +163,15 @@ class Movies extends Component {
               />
 
               {currentMovieCover && (
-                <AnimateMovieCover
-                  movieSrc={currentMovieCover.movieCover}
-                  setShowImg={this.state.fullImgVisible}
-                />
+                <AnimateMovieCover movieSrc={currentMovieCover.movieCover} setShowImg={this.state.fullImgVisible} />
               )}
             </div>
 
             <div className="col">
               {user && (
-                <Link
-                  to="/movies/new"
-                  className="btn popcorn-btn"
-                  style={{ marginBottom: 20 }}
-                >
-                  New Movie
+                <Link to="/movies/new" className="btn popcorn-btn" style={{ marginBottom: 20 }}>
+                  <FontAwesomeIcon style={{ color: "tomato" }} icon={faVideo} />
+                  <span className="ml-2 font-weight-bold">New Movie</span>
                 </Link>
               )}
 
@@ -233,8 +202,8 @@ class Movies extends Component {
           </div>
         </div>
       </>
-    )
+    );
   }
 }
 
-export default Movies
+export default Movies;

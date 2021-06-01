@@ -36,6 +36,7 @@ class CustomersForm extends Form {
     phone: Joi.string().min(5).max(50).required(),
     isGold: Joi.boolean(),
     imageBase64: Joi.any(),
+    moviesRented: Joi.string(),
   };
 
   async populateCustomer() {
@@ -93,7 +94,7 @@ class CustomersForm extends Form {
         <div className="row justify-content-center">
           <div className="col-lg-8">
             <h1>Edit Customer</h1>
-            <form action="#" onSubmit={this.handleSubmit} className="edit-form-movie">
+            <form action="#" id="customer-form" onSubmit={this.handleSubmit} className="edit-form-movie">
               {this.renderInput("name", "Name")}
               {this.renderInput("phone", "Phone")}
               {this.renderSelect("isGold", "Gold Customer", this.state.isGold)}
